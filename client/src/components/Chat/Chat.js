@@ -7,6 +7,7 @@ import './Chat.css'
 import Input from '../Input/Input'
 import InfoBar from '../InfoBar/InfoBar'
 import Messages from '../Messages/Messages'
+import TextContainer from '../TextContainer/TextContainer'
 let socket;
 
 export default function Chat( {location} ) {
@@ -14,6 +15,7 @@ export default function Chat( {location} ) {
     const [room, setRoom ] = useState('')
     const [ messages, setMessages] = useState([])
     const [ message, setMessage] = useState('')
+    const [ roomData, setRoomData ] = useState([])
     const Endpoint = 'localhost:5000'
 
     useEffect(() => {
@@ -28,19 +30,21 @@ export default function Chat( {location} ) {
        });
     //    console.log(socket)
 
-       //component unmount
-    //    return ()=>{
-    //        socket.emit('disconnect')
+      // component unmount
+       return ()=>{
+           socket.emit('disconnect')
 
-    //        socket.off()
-    //    }
+           socket.off()
+       }
     },[ Endpoint,location.search ]);
 
     useEffect (() => {        
         socket.on('message',(message) => {
-            console.log("useEfffect called")
-            console.log(message)
             setMessages(messages => [...messages,message])
+        })
+
+        socket.on('roomData',(roomData)=>{
+            setRoomData(roomData.users);
         })
     },[]);
 
@@ -60,6 +64,7 @@ export default function Chat( {location} ) {
                 <Messages messages = {messages} name = {name} />
                 <Input message = {message} setMessage = {setMessage} sendMessage = {sendMessage} />
             </div>
+            <TextContainer users = {roomData} />
         </div>
     )
 }
