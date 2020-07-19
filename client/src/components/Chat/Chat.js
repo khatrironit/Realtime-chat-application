@@ -26,7 +26,7 @@ export default function Chat( {location} ) {
        setRoom(room)
        socket.emit('join',{name, room},(error)=>{
            if(error)
-                console.log(error)
+                alert(error)
        });
     //    console.log(socket)
 
