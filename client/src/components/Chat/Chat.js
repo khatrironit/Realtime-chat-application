@@ -31,11 +31,11 @@ export default function Chat( {location} ) {
     //    console.log(socket)
 
       // component unmount
-       return ()=>{
-           socket.emit('disconnect')
+    //    return ()=>{
+    //        socket.emit('disconnect')
 
-           socket.off()
-       }
+    //        socket.off()
+    //    }
     },[ Endpoint,location.search ]);
 
     useEffect (() => {        

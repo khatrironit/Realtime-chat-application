@@ -13,7 +13,8 @@ const server = http.createServer(app);
 const io = socketio(server)
 
 app.use(router)
-app.use('cors')
+app.use(cors)
+
 io.on('connection',(socket) => {
     console.log('we have a socket connection!!')
 
